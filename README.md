@@ -1,11 +1,13 @@
-# netbox floorplan
+# NetBox Floorplan Plugin
 
-<img src="https://github.com/tbotnz/netbox_floorplan/workflows/tests/badge.svg" alt="Tests"/>
+<img src="https://github.com/netboxlabs/netbox-floorplan-plugin/workflows/tests/badge.svg" alt="Tests"/>
 
-#### demo
+Forked from https://github.com/tbotnz/netbox_floorplan
+
+## Demo
 ![demo](/media/demo.gif)
 
-#### summary
+## Summary
 A netbox plugin providing floorplan mapping capability for locations and sites
 
 - provides graphical ability to draw racks & unracked devices on a floorplan
@@ -14,9 +16,31 @@ A netbox plugin providing floorplan mapping capability for locations and sites
 - keyboard controls supported
 - export to svg
 
-#### installing
-Install the package, apply migrations, then add the plugin to ```PLUGINS = ["netbox_floorplan"]``` in ```/opt/netbox/netbox/netbox/configuration.py:``` then collectstatic
+## Compatibility
+
+|             |           |
+|-------------|-----------|
+| NetBox 3.5  | >= 0.3.2 |
+| NetBox 3.6  | >= 0.3.2 |
+
+## Installing
+
+The plugin is available as a Python package in pypi and can be installed with pip  
+
+```
+pip install netbox-floorplan-plugin
+```
+Enable the plugin in /opt/netbox/netbox/netbox/configuration.py:
+```
+PLUGINS = ['netbox_floorplan']
+```
+Restart NetBox and add `netbox-floorplan-plugin` to your local_requirements.txt
+
+See [NetBox Documentation](https://docs.netbox.dev/en/stable/plugins/#installing-plugins) for details
 
 
-#### mentions
+#### Mentions
+
+Forked from https://github.com/tbotnz/netbox_floorplan
+
 Special thanks to Ziply Fiber network automation team for helping originally helping to conceive this during the NANOG hackathon
