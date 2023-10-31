@@ -39,8 +39,12 @@ Restart NetBox and add `netbox-floorplan-plugin` to your local_requirements.txt
 See [NetBox Documentation](https://docs.netbox.dev/en/stable/plugins/#installing-plugins) for details
 
 
-#### Mentions
+## Mentions
 
 Forked from https://github.com/tbotnz/netbox_floorplan
 
 Special thanks to Ziply Fiber network automation team for helping originally helping to conceive this during the NANOG hackathon
+
+## Release process
+
+Update `netbox_floorplan/version.py` with a new version number, create a new Github release with the same number, the pypi publish workflow will run.
