@@ -9,6 +9,9 @@ jobs:
     name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
     runs-on: ubuntu-latest
     environment: release
+    permissions:
+      id-token: write
+      contents: read
     steps:
     - uses: actions/checkout@main
     - name: Set up Python 3.7
