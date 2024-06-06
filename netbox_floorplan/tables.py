@@ -7,6 +7,7 @@ from dcim.models import Rack
 
 
 class FloorplanTable(NetBoxTable):
+    
     class Meta(NetBoxTable.Meta):
         model = Floorplan
         fields = ('pk', 'site', 'location',

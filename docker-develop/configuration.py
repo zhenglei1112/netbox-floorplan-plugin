@@ -1,3 +1,4 @@
+#
 """NetBox configuration file."""
 import os
 

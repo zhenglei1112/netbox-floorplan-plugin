@@ -2,7 +2,7 @@
 Define the plugin menu buttons & the plugin navigation bar enteries.
 """
 
-from netbox.plugins import PluginMenu, PluginMenuButton, PluginMenuItem
+from netbox.plugins import PluginMenuItem
 
 
 #

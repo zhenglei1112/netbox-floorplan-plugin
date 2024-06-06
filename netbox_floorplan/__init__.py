@@ -2,6 +2,7 @@ from netbox.plugins import PluginConfig
 
 
 class FloorplanConfig(PluginConfig):
+    
     name = "netbox_floorplan"
     verbose_name = "Netbox Floorplan"
     description = ""
