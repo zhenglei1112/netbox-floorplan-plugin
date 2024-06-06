@@ -1,8 +1,8 @@
-{% extends 'base/layout.html' %}
+{% extends 'generic/_base.html' %}
 {% load static %}
 {% load form_helpers %}
 {% load helpers %}
-
+{% load django_htmx %}
 
 {% block head %}
 {{ block.super }}
@@ -27,7 +27,7 @@
 </ul>
 {% endblock tabs %}
 
-{% block content-wrapper %}
+{% block content %}
 {% load template_utils %}
 
 
@@ -55,7 +55,7 @@
                                         <div class="mb-1">
                                             <label class="form-label">Floorplan Dimensions</label>
                                         </div>
-                                        <a type="button" class="btn btn-sm btn-outline-info"
+                                        <a type="button" class="btn btn-outline-info"
                                             onclick="set_dimensions()">Set Dimensions
                                         </a>
                                     </div>
@@ -97,18 +97,18 @@
                                         <div class="mb-1">
                                             <label class="form-label">Supplimentary Object Add / Delete</label>
                                         </div>
-                                        <a type="button" class="btn btn-sm btn-outline-info" onclick="add_wall()">Add
+                                        <a type="button" class="btn btn-outline-info" onclick="add_wall()">Add
                                             Wall
                                         </a>
-                                        <a type="button" class="btn btn-sm btn-outline-info" onclick="add_area()">Add
+                                        <a type="button" class="btn btn-outline-info" onclick="add_area()">Add
                                             Area
                                         </a>
-                                        <a class="btn btn-sm btn-outline-success" onclick="add_text()">
+                                        <a class="btn btn-outline-success" onclick="add_text()">
                                             Add label
                                         </a>
-                                        <a class="btn btn-sm btn-outline-info tools disabled" onclick="lock_floorplan_object()" id="lock_button">Lock/Unlock Object
+                                        <a class="btn btn-outline-info tools disabled" onclick="lock_floorplan_object()" id="lock_button">Lock/Unlock Object
                                         </a>
-                                        <a class="btn btn-sm btn-outline-danger tools disabled"
+                                        <a class="btn btn-outline-danger tools disabled"
                                             onclick="delete_floorplan_object()" id="remove_button">
                                             Delete
                                         </a>
@@ -116,7 +116,7 @@
 
                                     </div>
                                     <div class="mb-3">
-                                        <a class="btn btn-sm btn-outline-info tools disabled">
+                                        <a class="btn btn-outline-info tools disabled">
                                             Set Color
                                             <input type="color" id="selected_color" name="body" value=""
                                                 oninput="set_color(this.value)" class="tools disabled">
@@ -126,10 +126,10 @@
                                         <div class="mb-1">
                                             <label class="form-label">Object Layer Control</label>
                                         </div>
-                                        <a type="button" class="btn btn-sm btn-outline-secondary tools disabled"
+                                        <a type="button" class="btn btn-outline-secondary tools disabled"
                                             onclick="bring_forward()"><i class="mdi mdi-plus"></i> Forward
                                         </a>
-                                        <a class="btn btn-sm btn-outline-secondary tools disabled"
+                                        <a class="btn btn-outline-secondary tools disabled"
                                             onclick="send_back()">
                                             <i class="mdi mdi-minus"></i> Backwards
                                         </a>
@@ -140,10 +140,10 @@
                                         </div>
                                         <input type='range' step='.01' max='2' min='0' onchange='set_zoom(this.value)'
                                             id="zoom">
-                                        <a class="btn btn-sm btn-outline-secondary" id="reset_zoom" href="#">
+                                        <a class="btn btn-outline-secondary" id="reset_zoom" href="#">
                                             Reset Zoom
                                         </a>
-                                        <a class="btn btn-sm btn-outline-secondary tools disabled"
+                                        <a class="btn btn-outline-secondary tools disabled"
                                             onclick="center_pan_on_slected_object()">
                                             <i class="mdi mdi-bullseye"></i> Center
                                         </a>
@@ -152,10 +152,10 @@
                                         <div class="mb-1">
                                             <label class="form-label"></label>
                                         </div>
-                                        <a class="btn btn-sm btn-primary" onclick="save_and_redirect()">
+                                        <a class="btn btn-primary" onclick="save_and_redirect()">
                                             Save
                                         </a>
-                                        <a class="btn btn-sm btn-outline-success float-end" id="export_svg">
+                                        <a class="btn btn-outline-success float-end" id="export_svg">
                                             Export SVG
                                         </a>
                                     </div>
@@ -219,5 +219,5 @@
 </div>
 
 <script type="module" src="{% static 'netbox_floorplan/floorplan/edit.js' %}"></script>
-
-{% endblock content-wrapper %}
+<script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+{% endblock content %}

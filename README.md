@@ -18,10 +18,11 @@ A netbox plugin providing floorplan mapping capability for locations and sites
 
 ## Compatibility
 
-|             |           |
+| NetBox Version | Plugin Version |
 |-------------|-----------|
-| NetBox 3.5  | >= 0.3.2 |
-| NetBox 3.6  | >= 0.3.2 |
+| 3.5         | >= 0.3.2  |
+| 3.6         | >= 0.3.2  |
+| >4.0.2      | 0.4.0     |
 
 ## Installing
 

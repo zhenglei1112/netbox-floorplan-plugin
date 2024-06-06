@@ -1,13 +1,13 @@
-from extras.plugins import PluginConfig
+from netbox.plugins import PluginConfig
 
 
 class FloorplanConfig(PluginConfig):
     name = "netbox_floorplan"
     verbose_name = "Netbox Floorplan"
     description = ""
-    version = "0.3.6"
+    version = "0.4.0"
     base_url = "floorplan"
-    min_version = "3.4.1"
-
+    min_version = "4.0.2"
+    max_version = "4.0.99"
 
 config = FloorplanConfig
