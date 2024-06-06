@@ -14,7 +14,6 @@ class FloorplanTable(NetBoxTable):
         default_columns = ('pk', 'site', 'location',
                            'background_image', 'width', 'height')
 
-
 class FloorplanRackTable(NetBoxTable):
 
     name = tables.LinkColumn()
