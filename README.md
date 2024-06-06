@@ -15,6 +15,7 @@ A netbox plugin providing floorplan mapping capability for locations and sites
 - floorplan object mapped to sites or locations and click through rack/devices
 - keyboard controls supported
 - export to svg
+- NOTE: Background Images have been disabled.
 
 ## Compatibility
 
@@ -49,8 +50,11 @@ See [NetBox Documentation](https://docs.netbox.dev/en/stable/plugins/#installing
 
 ## Contributors ##
 @tbotnz
+
 @cruse1977
+
 @fedefava86 - Initial 4.0 PR
+
 @Dansheps
 
 
