@@ -29,8 +29,8 @@ A netbox plugin providing floorplan mapping capability for locations and sites
 
 The plugin is available as a Python package in pypi and can be installed with pip  
 
+
 ```
-source /opt/netbox/venv/bin/activate
 sudo pip install netbox-floorplan-plugin
 ```
 Enable the plugin in /opt/netbox/netbox/netbox/configuration.py:
@@ -47,16 +47,6 @@ sudo ./venv/bin/python3 netbox/manage.py migrate
 Restart NetBox and add `netbox-floorplan-plugin` to your local_requirements.txt
 
 See [NetBox Documentation](https://docs.netbox.dev/en/stable/plugins/#installing-plugins) for details
-
-## Contributors ##
-@tbotnz
-
-@cruse1977
-
-@fedefava86 - Initial 4.0 PR
-
-@Dansheps
-
 
 ## Mentions
 
