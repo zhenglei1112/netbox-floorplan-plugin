@@ -55,6 +55,7 @@ class FloorplanLocationTabView(generic.ObjectView):
 class FloorplanListView(generic.ObjectListView):
     queryset = models.Floorplan.objects.all()
     table = tables.FloorplanTable
+    template_name = "netbox_floorplan/floorplan_ui_listview.html"
 
 
 class FloorplanAddView(PermissionRequiredMixin, View):
