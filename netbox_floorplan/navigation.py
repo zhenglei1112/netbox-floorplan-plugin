@@ -10,9 +10,10 @@ from netbox.plugins import PluginMenuItem
 #
 menu_buttons = (
     PluginMenuItem(
-        link="plugins:netbox_floorplan:floorplan_list",
-        link_text="Floorplans",
+        link="plugins:netbox_floorplan:floorplanimage_list",
+        link_text="Floorplan Images",
     ),
+
 )
 
 

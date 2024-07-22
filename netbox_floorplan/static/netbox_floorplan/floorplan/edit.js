@@ -15,6 +15,7 @@ import {
     init_floor_plan
 } from "/static/netbox_floorplan/floorplan/utils.js";
 
+
 var csrf = document.getElementById('csrf').value;
 var obj_pk = document.getElementById('obj_pk').value;
 var obj_name = document.getElementById('obj_name').value;
@@ -24,6 +25,7 @@ var location_id = document.getElementById('location_id').value;
 
 htmx.ajax('GET', `/plugins/floorplan/floorplans/racks/?floorplan_id=${obj_pk}`, { target: '#rack-card', swap: 'innerHTML', trigger: 'load' })
 htmx.ajax('GET', `/plugins/floorplan/floorplans/devices/?floorplan_id=${obj_pk}`, { target: '#unrack-card', swap: 'innerHTML', trigger: 'load' })
+
 
 fabric.Object.prototype.set({
     snapThreshold: 45,
@@ -102,7 +104,8 @@ function add_wall() {
         left: 0,
         width: 10,
         height: 500,
-        fill: '#6ea8fe',
+        //fill: '#6ea8fe',
+        fill: 'red',
         opacity: 0.8,
         lockRotation: false,
         originX: "center",
@@ -119,7 +122,6 @@ function add_wall() {
             "object_type": "wall",
         },
     });
-
     var group = new fabric.Group([wall]);
 
     group.setControlsVisibility({
@@ -163,7 +165,7 @@ function add_area() {
     });
     var group = new fabric.Group([wall]);
 
-    group.setControlsVisibility({
+   group.setControlsVisibility({
         mt: true,
         mb: true,
         ml: true,
@@ -175,6 +177,7 @@ function add_area() {
     })
     canvas.add(group);
     canvas.centerObject(group);
+    canvas.requestRenderAll();
 }
 window.add_area = add_area;
 
@@ -251,6 +254,11 @@ window.send_back = send_back;
 function set_dimensions() {
     $('#control_unit_modal').modal('show');
 }
+function set_background() {
+    $('#background_unit_modal').modal('show');
+}
+
+window.set_background = set_background;
 window.set_dimensions = set_dimensions;
 
 function add_text() {
@@ -413,6 +421,7 @@ window.set_color = set_color;
 function set_zoom(new_current_zoom) {
     current_zoom = new_current_zoom;
     canvas.setZoom(current_zoom);
+    canvas.requestRenderAll()
     document.getElementById("zoom").value = current_zoom;
 }
 window.set_zoom = set_zoom;
@@ -441,6 +450,57 @@ window.center_pan_on_slected_object = center_pan_on_slected_object;
 // end buttons ----------------------------------------------------------------------------- !
 
 // start set scale ----------------------------------------------------------------------------- !
+
+function update_background() {
+    var assigned_image = document.getElementById("id_assigned_image").value;
+    if (assigned_image == "") { assigned_image = null; }
+    var floor_json = canvas.toJSON(["id", "text", "_controlsVisibility", "custom_meta", "lockMovementY", "lockMovementX", "evented", "selectable"]);
+
+    $.ajax({
+        type: "PATCH",
+        url: `/api/plugins/floorplan/floorplans/${obj_pk}/`,
+        dataType: "json",
+        headers: {
+            "X-CSRFToken": csrf,
+            "Content-Type": "application/json"
+        },
+        data: JSON.stringify({
+            "assigned_image": assigned_image,
+            "canvas": floor_json
+        }),
+        error: function (err) {
+            console.log(`Error: ${err}`);
+        }
+    }).done(function (floorplan) {
+            if (floorplan.assigned_image != null) {
+                var img_url = "";
+                if (floorplan.assigned_image.external_url != "") {
+                    img_url = floorplan.assigned_image.external_url;
+                } else {
+                    img_url = floorplan.assigned_image.file;
+                }
+
+                var img = fabric.Image.fromURL(img_url, function(img) {
+                    let scaleRatio = Math.max(canvas.width / img.width, canvas.height / img.height);
+                    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+                        scaleX: scaleRatio,
+                        scaleY: scaleRatio,
+                        left: canvas.width / 2,
+                        top: canvas.height / 2,
+                        originX: 'middle',
+                        originY: 'middle'
+                    });
+                });
+            
+            } else {
+                canvas.setBackgroundImage().renderAll();
+            }
+            canvas.renderAll();
+            $('#background_unit_modal').modal('hide');
+    });
+}
+
+window.update_background = update_background;
 
 function update_dimensions() {
 
