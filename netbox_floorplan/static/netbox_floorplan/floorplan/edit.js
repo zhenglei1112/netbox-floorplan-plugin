@@ -23,8 +23,8 @@ var record_type = document.getElementById('record_type').value;
 var site_id = document.getElementById('site_id').value;
 var location_id = document.getElementById('location_id').value;
 
-htmx.ajax('GET', `/plugins/floorplan/floorplans/racks/?floorplan_id=${obj_pk}`, { target: '#rack-card', swap: 'innerHTML', trigger: 'load' })
-htmx.ajax('GET', `/plugins/floorplan/floorplans/devices/?floorplan_id=${obj_pk}`, { target: '#unrack-card', swap: 'innerHTML', trigger: 'load' })
+htmx.ajax('GET', `/plugins/floorplan/floorplans/racks/?floorplan_id=${obj_pk}`, { source: '#rack-card', target: '#rack-card', swap: 'innerHTML', trigger: 'load' })
+htmx.ajax('GET', `/plugins/floorplan/floorplans/devices/?floorplan_id=${obj_pk}`, { source: '#unrack-card', target: '#unrack-card', swap: 'innerHTML', trigger: 'load' })
 
 
 fabric.Object.prototype.set({
