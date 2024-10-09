@@ -13,7 +13,7 @@ class FloorplanImageForm(NetBoxModelForm):
         FieldSet(('name', 'file', 'external_url', 'comments'), name='General'),
         FieldSet(('comments', 'tags'), name='')
     )
-    
+
     class Meta:
         model = FloorplanImage
         fields = [
