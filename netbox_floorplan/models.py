@@ -21,7 +21,7 @@ class FloorplanImage(NetBoxModel):
         upload_to=file_upload,
         blank=True
     )
-    
+
     external_url = models.URLField(
         blank=True,
         max_length=255
@@ -36,7 +36,7 @@ class FloorplanImage(NetBoxModel):
 
     def __str__(self):
         return f'{self.name}'
-    
+
     class Meta:
         ordering = ('name',)
 
@@ -109,15 +109,17 @@ class Floorplan(NetBoxModel):
     assigned_image = models.ForeignKey(
         to='FloorplanImage',
         blank=True,
-        null=True, 
+        null=True,
         on_delete=models.SET_NULL
     )
+
     width = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         blank=True,
         null=True
     )
+
     height = models.DecimalField(
         max_digits=10,
         decimal_places=2,
@@ -169,7 +171,6 @@ class Floorplan(NetBoxModel):
                                     drawn_racks.append(
                                         int(subobj["custom_meta"]["object_id"]))
         return drawn_racks
-
 
     @property
     def mapped_devices(self):

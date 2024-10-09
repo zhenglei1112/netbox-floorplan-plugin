@@ -4,13 +4,16 @@ from dcim.models import Rack, Device
 from utilities.forms.rendering import FieldSet
 from utilities.forms.fields import CommentField
 
+
 class FloorplanImageForm(NetBoxModelForm):
+
     comments = CommentField()
 
     fieldsets = (
         FieldSet(('name', 'file', 'external_url', 'comments'), name='General'),
-        FieldSet(('comments', 'tags'), name=''),        
+        FieldSet(('comments', 'tags'), name='')
     )
+    
     class Meta:
         model = FloorplanImage
         fields = [
@@ -18,6 +21,8 @@ class FloorplanImageForm(NetBoxModelForm):
             'file',
             'external_url'
         ]
+
+
 class FloorplanForm(NetBoxModelForm):
     class Meta:
         model = Floorplan
