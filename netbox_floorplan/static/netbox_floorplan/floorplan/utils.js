@@ -170,7 +170,6 @@ function init_floor_plan(floorplan_id, canvas, mode) {
                         canvas.getObjects().forEach(function (object) {
                             if (object.custom_meta) {
                                 if (object.custom_meta.object_type == "floorplan_boundry") {
-                                    alert("found")
                                     left = object.left;
                                     top = object.top;
                                     width = object.width;
@@ -178,7 +177,6 @@ function init_floor_plan(floorplan_id, canvas, mode) {
                                 }
                             }
                         });
-                        alert(height + ":" + width)
                         // if we have a floorplan boundary, position the image in there 
                         if (height != 0 && width != 0) {
                             let scaleRatioX = Math.max(width / img.width)

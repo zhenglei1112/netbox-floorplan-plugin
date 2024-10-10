@@ -453,8 +453,15 @@ window.center_pan_on_slected_object = center_pan_on_slected_object;
 
 function update_background() {
     var assigned_image = document.getElementById("id_assigned_image").value;
-    if (assigned_image == "") { assigned_image = null; }
+    if (assigned_image == "") { 
+        assigned_image = null; 
+        canvas.setBackgroundImage(null, canvas.renderAll.bind(canvas));
+    }
     var floor_json = canvas.toJSON(["id", "text", "_controlsVisibility", "custom_meta", "lockMovementY", "lockMovementX", "evented", "selectable"]);
+
+
+
+
 
     $.ajax({
         type: "PATCH",
@@ -490,7 +497,6 @@ function update_background() {
                     canvas.getObjects().forEach(function (object) {
                         if (object.custom_meta) {
                             if (object.custom_meta.object_type == "floorplan_boundry") {
-                                alert("found")
                                 left = object.left;
                                 top = object.top;
                                 width = object.width;
@@ -498,7 +504,6 @@ function update_background() {
                             }
                         }
                     });
-                    alert(height + ":" + width)
                     // if we have a floorplan boundary, position the image in there 
                     if (height != 0 && width != 0) {
                         let scaleRatioX = Math.max(width / img.width)
