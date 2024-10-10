@@ -8,7 +8,7 @@
 {{ block.super }}
 <script src="{% static 'netbox_floorplan/vendors/fabric-js-6.0.2.js' %}"></script>
 <script src="{% static 'netbox_floorplan/vendors/jquery-3.7.1.js' %}"></script>
-
+<script src="{% static 'netbox_floorplan/vendors/htmx.min.js' %}"></script>
 
 {% endblock head %}
 
@@ -251,5 +251,5 @@
 </div>
 
 <script type="module" src="{% static 'netbox_floorplan/floorplan/edit.js' %}"></script>
-<script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+
 {% endblock content %}
