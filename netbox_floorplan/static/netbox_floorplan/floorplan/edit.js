@@ -453,8 +453,15 @@ window.center_pan_on_slected_object = center_pan_on_slected_object;
 
 function update_background() {
     var assigned_image = document.getElementById("id_assigned_image").value;
-    if (assigned_image == "") { assigned_image = null; }
+    if (assigned_image == "") { 
+        assigned_image = null; 
+        canvas.setBackgroundImage(null, canvas.renderAll.bind(canvas));
+    }
     var floor_json = canvas.toJSON(["id", "text", "_controlsVisibility", "custom_meta", "lockMovementY", "lockMovementX", "evented", "selectable"]);
+
+
+
+
 
     $.ajax({
         type: "PATCH",
@@ -481,15 +488,45 @@ function update_background() {
                 }
 
                 var img = fabric.Image.fromURL(img_url, function(img) {
-                    let scaleRatio = Math.max(canvas.width / img.width, canvas.height / img.height);
-                    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-                        scaleX: scaleRatio,
-                        scaleY: scaleRatio,
-                        left: canvas.width / 2,
-                        top: canvas.height / 2,
-                        originX: 'middle',
-                        originY: 'middle'
+    
+
+                    var left = 0;
+                    var top = 0;
+                    var width = 0;
+                    var height = 0;
+                    canvas.getObjects().forEach(function (object) {
+                        if (object.custom_meta) {
+                            if (object.custom_meta.object_type == "floorplan_boundry") {
+                                left = object.left;
+                                top = object.top;
+                                width = object.width;
+                                height = object.height;
+                            }
+                        }
                     });
+                    // if we have a floorplan boundary, position the image in there 
+                    if (height != 0 && width != 0) {
+                        let scaleRatioX = Math.max(width / img.width)
+                        let scaleRatioY = Math.max(height / img.height);
+                        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+                            scaleX: scaleRatioX,
+                            scaleY: scaleRatioY,
+                            left: left,
+                            top: top
+                        });     
+                    }
+                    else
+                    {
+                        let scaleRatio = Math.max(canvas.width / img.width, canvas.height / img.height);
+                        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+                            scaleX: scaleRatio,
+                            scaleY: scaleRatio,
+                            left: canvas.width / 2,
+                            top: canvas.height / 2,
+                            originX: 'middle',
+                            originY: 'middle'
+                        });
+                    }
                 });
             
             } else {
@@ -570,6 +607,7 @@ function update_dimensions() {
             maxHeight: canvasHeight,
             centeredRotation: true,
         });
+
 
         var text = new fabric.IText(`${obj_name}`, {
             fontFamily: "Courier New",
