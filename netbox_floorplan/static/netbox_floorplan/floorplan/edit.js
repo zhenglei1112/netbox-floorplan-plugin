@@ -267,7 +267,7 @@ function add_text() {
 }
 window.add_text = add_text;
 
-function add_floorplan_object(top, left, width, height, unit, fill, rotation, object_id, object_name, object_type, status) {
+function add_floorplan_object(top, left, width, height, unit, fill, rotation, object_id, object_name, object_type, status, image) {
     var object_width;
     var object_height;
     if ( !width || !height || !unit ){
@@ -292,44 +292,89 @@ function add_floorplan_object(top, left, width, height, unit, fill, rotation, ob
         console.log(object_height)
     }
     document.getElementById(`object_${object_type}_${object_id}`).remove();
-    var rect = new fabric.Rect({
-        top: top,
-        name: "rectangle",
-        left: left,
-        width: object_width,
-        height: object_height,
-        fill: fill,
-        opacity: 0.8,
-        lockRotation: false,
-        originX: "center",
-        originY: "center",
-        cornerSize: 15,
-        hasRotatingPoint: true,
-        perPixelTargetFind: true,
-        minScaleLimit: 1,
-        maxWidth: canvasWidth,
-        maxHeight: canvasHeight,
-        centeredRotation: true,
-        custom_meta: {
-            "object_type": object_type,
-            "object_id": object_id,
-            "object_name": object_name,
-            "object_url": "/dcim/" + object_type + "s/" + object_id + "/",
-        },
-    });
+    /* if we have an image, we display the text below, otherwise we display the text within */
+    var rect, text_offset = 0;
+    if (!image) {
+        rect = new fabric.Rect({
+            top: top,
+            name: "rectangle",
+            left: left,
+            width: object_width,
+            height: object_height,
+            fill: fill,
+            opacity: 0.8,
+            lockRotation: false,
+            originX: "center",
+            originY: "center",
+            cornerSize: 15,
+            hasRotatingPoint: true,
+            perPixelTargetFind: true,
+            minScaleLimit: 1,
+            maxWidth: canvasWidth,
+            maxHeight: canvasHeight,
+            centeredRotation: true,
+            custom_meta: {
+                "object_type": object_type,
+                "object_id": object_id,
+                "object_name": object_name,
+                "object_url": "/dcim/" + object_type + "s/" + object_id + "/",
+            },
+        });
+    } else {
+        object_height = object_width;
+        text_offset = object_height/2 + 4;
+        rect = new fabric.Image(null, {
+            top: top,
+            name: "rectangle",
+            left: left,
+            width: object_width,
+            height: object_height,
+            opacity: 1,
+            lockRotation: false,
+            originX: "center",
+            originY: "center",
+            cornerSize: 15,
+            hasRotatingPoint: true,
+            perPixelTargetFind: true,
+            minScaleLimit: 1,
+            maxWidth: canvasWidth,
+            maxHeight: canvasHeight,
+            centeredRotation: true,
+            shadow: new fabric.Shadow({
+                color: "red",
+                blur: 15,
+            }),
+            custom_meta: {
+                "object_type": object_type,
+                "object_id": object_id,
+                "object_name": object_name,
+                "object_url": "/dcim/" + object_type + "s/" + object_id + "/",
+            },
+        });
+        rect.setSrc("/media/" + image, function(img){
+            img.scaleX =  object_width / img.width;
+            img.scaleY =  object_height / img.height;
+            canvas.renderAll();
+        });
+    }
 
-    var text = new fabric.IText(object_name, {
+    var text = new fabric.Textbox(object_name, {
         fontFamily: "Courier New",
         fontSize: 16,
+        splitByGrapheme: text_offset? null : true,
         fill: "#FFFF",
+        width: object_width,
         textAlign: "center",
         originX: "center",
         originY: "center",
         left: left,
-        top: top,
+        top: top + text_offset,
         excludeFromExport: false,
         includeDefaultValues: true,
         centeredRotation: true,
+        stroke: "#000",
+        strokeWidth: 2,
+        paintFirst: 'stroke',
         custom_meta: {
             "text_type": "name",
         }
@@ -344,10 +389,14 @@ function add_floorplan_object(top, left, width, height, unit, fill, rotation, ob
         originX: "center",
         originY: "center",
         left: left,
-        top: top + 16,
+        top: top + text_offset + 16,
         excludeFromExport: false,
         includeDefaultValues: true,
         centeredRotation: true,
+        shadow: text_offset? new fabric.Shadow({
+            color: '#FFF',
+            blur: 1
+        }) : null,
         custom_meta: {
             "text_type": "status",
         }
