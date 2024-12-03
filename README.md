@@ -24,7 +24,6 @@ A netbox plugin providing floorplan mapping capability for locations and sites
 | 3.5         | >= 0.3.2  |
 | 3.6         | >= 0.3.2  |
 | 4.0.x       | 0.4.1     |
-| 4.1.x       | 0.5.0     |
 
 ## Installing
 
@@ -43,6 +42,7 @@ Enable Migrations:
 cd /opt/netbox
 sudo ./venv/bin/python3 netbox/manage.py makemigrations netbox_floorplan_plugin
 sudo ./venv/bin/python3 netbox/manage.py migrate
+sudo ./venv/bin/python3 netbox/manage.py collectstatic
 ```
 
 Restart NetBox and add `netbox-floorplan-plugin` to your local_requirements.txt

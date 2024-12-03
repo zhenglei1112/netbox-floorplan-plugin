@@ -5,4 +5,4 @@ def file_upload(instance, filename):
     """
     path = 'netbox-floorplan/'
 
-    return f'{path}_{filename}'
+    return f'{path}{filename}'
