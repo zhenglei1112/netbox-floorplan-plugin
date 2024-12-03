@@ -56,7 +56,7 @@ class FloorplanImage(NetBoxModel):
 
         try:
             return self.file.size
-        except:
+        except NameError:
             return None
 
     @property
