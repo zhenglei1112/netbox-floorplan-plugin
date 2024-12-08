@@ -187,6 +187,7 @@ class Floorplan(NetBoxModel):
         return drawn_devices
 
     def resync_canvas(self):
+        changed = False
         if self.canvas:
             if self.canvas.get("objects"):
                 for index, obj in enumerate(self.canvas["objects"]):
@@ -197,6 +198,7 @@ class Floorplan(NetBoxModel):
                             rack_qs = Rack.objects.filter(pk=rack_id)
                             if not rack_qs.exists():
                                 self.canvas["objects"].remove(obj)
+                                changed = True
                             else:
                                 rack = rack_qs.first()
                                 self.canvas["objects"][index]["custom_meta"]["object_name"] = rack.name
@@ -204,17 +206,22 @@ class Floorplan(NetBoxModel):
                                     for subcounter, subobj in enumerate(obj["objects"]):
                                         if subobj.get("type") == "i-text":
                                             if subobj.get("custom_meta", {}).get("text_type") == "name":
-                                                self.canvas["objects"][index]["objects"][
-                                                    subcounter]["text"] = f"{rack.name}"
+                                                if subobj["text"] != f"{rack.name}":
+                                                    self.canvas["objects"][index]["objects"][
+                                                        subcounter]["text"] = f"{rack.name}"
+                                                    changed = True
                                             if subobj.get("custom_meta", {}).get("text_type") == "status":
-                                                self.canvas["objects"][index]["objects"][
-                                                    subcounter]["text"] = f"{rack.status}"
+                                                if subobj["text"] != f"{rack.status}":
+                                                    self.canvas["objects"][index]["objects"][
+                                                        subcounter]["text"] = f"{rack.status}"
+                                                    changed = True
                         if obj["custom_meta"].get("object_type") == "device":
                             device_id = int(obj["custom_meta"]["object_id"])
-                            # if rack is not in the database, remove it from the canvas
+                            # if device is not in the database, remove it from the canvas
                             device_qs = Device.objects.filter(pk=device_id)
                             if not device_qs.exists():
                                 self.canvas["objects"].remove(obj)
+                                changed = True
                             else:
                                 device = device_qs.first()
                                 self.canvas["objects"][index]["custom_meta"]["object_name"] = device.name
@@ -222,12 +229,17 @@ class Floorplan(NetBoxModel):
                                     for subcounter, subobj in enumerate(obj["objects"]):
                                         if subobj.get("type") == "i-text":
                                             if subobj.get("custom_meta", {}).get("text_type") == "name":
-                                                self.canvas["objects"][index]["objects"][
-                                                    subcounter]["text"] = f"{device.name}"
+                                                if subobj["text"] != f"{device.name}":
+                                                    self.canvas["objects"][index]["objects"][
+                                                        subcounter]["text"] = f"{device.name}"
+                                                    changed = True
                                             if subobj.get("custom_meta", {}).get("text_type") == "status":
-                                                self.canvas["objects"][index]["objects"][
-                                                    subcounter]["text"] = f"{device.status}"
-        self.save()
+                                                if subobj["text"] != f"{device.status}":
+                                                    self.canvas["objects"][index]["objects"][
+                                                        subcounter]["text"] = f"{device.status}"
+                                                    changed = True
+        if changed:
+            self.save()
 
     def save(self, *args, **kwargs):
         if self.site and self.location:
