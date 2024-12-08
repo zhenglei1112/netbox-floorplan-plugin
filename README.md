@@ -42,6 +42,7 @@ Enable Migrations:
 cd /opt/netbox
 sudo ./venv/bin/python3 netbox/manage.py makemigrations netbox_floorplan_plugin
 sudo ./venv/bin/python3 netbox/manage.py migrate
+sudo ./venv/bin/python3 netbox/manage.py collectstatic
 ```
 
 Restart NetBox and add `netbox-floorplan-plugin` to your local_requirements.txt

@@ -93,8 +93,10 @@ class FloorplanMapEditView(LoginRequiredMixin, View):
             location = Location.objects.get(id=fp.location.id)
         racklist = Rack.objects.filter(site=site)
         form = forms.FloorplanRackFilterForm
+        form2 = forms.FloorplanForm
         return render(request, "netbox_floorplan/floorplan_edit.html", {
             "form": form,
+            "form2": form2,
             "site": site,
             "location": location,
             "racklist": racklist,
@@ -133,3 +135,22 @@ class FloorplanDeviceListView(generic.ObjectListView):
             self.queryset = Device.objects.all().filter(~Q(id__in=fp_instance.mapped_devices)).filter(
                 location=fp_instance.location.id).order_by("name")
         return super().get(request)
+
+
+class FloorplanImageView(generic.ObjectView):
+    queryset = models.FloorplanImage.objects.all()
+
+
+class FloorplanImageListView(generic.ObjectListView):
+    queryset = models.FloorplanImage.objects.all()
+    table = tables.FloorplanImageTable
+
+
+class FloorplanImageEditView(generic.ObjectEditView):
+    queryset = models.FloorplanImage.objects.all()
+    form = forms.FloorplanImageForm
+    template_name = 'netbox_floorplan/floorplanimage_edit.html'
+
+
+class FloorplanImageDeleteView(generic.ObjectDeleteView):
+    queryset = models.FloorplanImage.objects.all()

@@ -1,9 +1,24 @@
 import django_tables2 as tables
 
 from netbox.tables import NetBoxTable
-from .models import Floorplan
+from .models import Floorplan, FloorplanImage
 
 from dcim.models import Rack
+
+
+class FloorplanImageTable(NetBoxTable):
+    name = tables.Column(
+        linkify=True,
+    )
+
+    class Meta(NetBoxTable.Meta):
+        model = FloorplanImage
+        fields = (
+            'pk',
+            'id',
+            'name',
+            'file'
+        )
 
 
 class FloorplanTable(NetBoxTable):
@@ -11,9 +26,9 @@ class FloorplanTable(NetBoxTable):
     class Meta(NetBoxTable.Meta):
         model = Floorplan
         fields = ('pk', 'site', 'location',
-                  'background_image', 'width', 'height')
+                  'assigned_image', 'width', 'height')
         default_columns = ('pk', 'site', 'location',
-                           'background_image', 'width', 'height')
+                           'assigned_image', 'width', 'height')
 
 
 class FloorplanRackTable(NetBoxTable):
