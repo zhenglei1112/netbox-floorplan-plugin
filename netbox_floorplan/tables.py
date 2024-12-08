@@ -54,7 +54,7 @@ class FloorplanDeviceTable(NetBoxTable):
     name = tables.LinkColumn()
 
     actions = tables.TemplateColumn(template_code="""
-    <a type="button" class="btn btn-sm btn-outline-info" onclick="add_floorplan_object(30, 50, 60, 91, '{{ record.outer_unit }}', '#ea8fe', 30, '{{ record.id }}', '{{ record.name }}', 'device', '{{ record.status }}')">Add Device
+    <a type="button" class="btn btn-sm btn-outline-info" onclick="add_floorplan_object(30, 50, 60, 60, '{{ record.outer_unit }}', '#ea8fe', 30, '{{ record.id }}', '{{ record.name }}', 'device', '{{ record.status }}', '{{ record.device_type.front_image }}')">Add Device
     </a>
     """)
 
