@@ -25,6 +25,7 @@ A netbox plugin providing floorplan mapping capability for locations and sites
 | 4.0.x       | 0.4.1     |
 | 4.1.x       | 0.5.0     |
 | 4.2.x       | 0.6.0     |
+| 4.3.x       | 0.7.0     |
 
 ## Installing
 
@@ -49,6 +50,9 @@ sudo ./venv/bin/python3 netbox/manage.py collectstatic
 Restart NetBox and add `netbox-floorplan-plugin` to your local_requirements.txt
 
 See [NetBox Documentation](https://docs.netbox.dev/en/stable/plugins/#installing-plugins) for details
+
+>[!IMPORTANT]
+>In order for racks to display properly, the rack type of the rack should be specified and a width/height set within the type. 
 
 ## Mentions
 
