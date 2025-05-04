@@ -51,8 +51,8 @@ Restart NetBox and add `netbox-floorplan-plugin` to your local_requirements.txt
 
 See [NetBox Documentation](https://docs.netbox.dev/en/stable/plugins/#installing-plugins) for details
 
-[!NOTE]
-In order for racks to display properly, the rack type of the rack should be specified and a width/height set within the type. 
+>[!IMPORTANT]
+>In order for racks to display properly, the rack type of the rack should be specified and a width/height set within the type. 
 
 ## Mentions
 
