@@ -130,10 +130,10 @@ class FloorplanDeviceListView(generic.ObjectListView):
         fp_instance = models.Floorplan.objects.get(pk=fp_id)
         if fp_instance.record_type == "site":
             self.queryset = Device.objects.all().filter(~Q(id__in=fp_instance.mapped_devices)).filter(
-                site=fp_instance.site.id).order_by("name")
+                site=fp_instance.site.id, rack=None).order_by("name")
         else:
             self.queryset = Device.objects.all().filter(~Q(id__in=fp_instance.mapped_devices)).filter(
-                location=fp_instance.location.id).order_by("name")
+                location=fp_instance.location.id, rack=None).order_by("name")
         return super().get(request)
 
 
