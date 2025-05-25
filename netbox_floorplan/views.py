@@ -136,21 +136,22 @@ class FloorplanDeviceListView(generic.ObjectListView):
                 location=fp_instance.location.id, rack=None).order_by("name")
         return super().get(request)
 
-
+@register_model_view(models.FloorplanImage)
 class FloorplanImageView(generic.ObjectView):
     queryset = models.FloorplanImage.objects.all()
 
-
+@register_model_view(models.FloorplanImage, "list", path="", detail=False)
 class FloorplanImageListView(generic.ObjectListView):
     queryset = models.FloorplanImage.objects.all()
     table = tables.FloorplanImageTable
 
-
+@register_model_view(models.FloorplanImage, "add", detail=False)
+@register_model_view(models.FloorplanImage, "edit")
 class FloorplanImageEditView(generic.ObjectEditView):
     queryset = models.FloorplanImage.objects.all()
     form = forms.FloorplanImageForm
     template_name = 'netbox_floorplan/floorplanimage_edit.html'
 
-
+@register_model_view(models.FloorplanImage, "delete")
 class FloorplanImageDeleteView(generic.ObjectDeleteView):
     queryset = models.FloorplanImage.objects.all()
