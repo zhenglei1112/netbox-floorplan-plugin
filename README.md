@@ -40,10 +40,9 @@ Enable the plugin in /opt/netbox/netbox/netbox/configuration.py:
 ```
 PLUGINS = ['netbox_floorplan']
 ```
-Enable Migrations:
+Enable Migrations (note this may vary based on the NetBox runtime environment):
 ```
 cd /opt/netbox
-sudo ./venv/bin/python3 netbox/manage.py makemigrations netbox_floorplan_plugin
 sudo ./venv/bin/python3 netbox/manage.py migrate
 sudo ./venv/bin/python3 netbox/manage.py collectstatic
 ```
@@ -61,6 +60,3 @@ Forked from https://github.com/tbotnz/netbox_floorplan
 
 Special thanks to Ziply Fiber network automation team for helping originally helping to conceive this during the NANOG hackathon
 
-## Release process
-
-Update `netbox_floorplan/version.py` with a new version number, create a new Github release with the same number, the pypi publish workflow will run.
