@@ -53,22 +53,22 @@
                         <a class="btn btn-primary"
                             href="/plugins/floorplan/floorplans/add/?{% if record_type == 'site' %}site{% else %}location{% endif %}={{object.id}}">
                             <i class="mdi mdi-plus-thick" aria-hidden="true"></i>
-                            Add Floorplan
+                            新增平面图
                         </a>
                         {% else %}
                         <input type="hidden" id="floorplan_id" value="{{floorplan.id}}">
                         <a class="btn btn-outline-success" id="export_svg">
-                            Export SVG
+                            输出 SVG
                         </a>
                         <a class="btn btn-warning" href="/plugins/floorplan/floorplans/{{floorplan.id}}/edit/">
                             <span class="mdi mdi-pencil" aria-hidden="true"></span>
-                            Edit Floorplan
+                            修改平面图
                         </a>
                         <a class="btn btn-danger" href="#"
                             hx-get="/plugins/floorplan/floorplans/{{floorplan.id}}/delete/"
                             hx-target="#htmx-modal-content" data-bs-toggle="modal" data-bs-target="#htmx-modal">
                             <span class="mdi mdi-trash-can-outline" aria-hidden="true"></span>
-                            Delete Floorplan
+                            删除平面图
                         </a>
                         {% endif %}
                     </div>

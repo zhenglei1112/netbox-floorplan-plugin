@@ -15,7 +15,7 @@ class FloorplanSiteTabView(generic.ObjectView):
     queryset = Site.objects.all()
 
     tab = ViewTab(
-        label='Floor Plan',
+        label='平面图',
         hide_if_empty=False,
         permission="netbox_floorplan.view_floorplan",
     )
@@ -36,7 +36,7 @@ class FloorplanLocationTabView(generic.ObjectView):
     queryset = Location.objects.all()
 
     tab = ViewTab(
-        label="Floor Plan",
+        label="平面图",
         hide_if_empty=False,
         permission="netbox_floorplan.view_floorplan",
     )
